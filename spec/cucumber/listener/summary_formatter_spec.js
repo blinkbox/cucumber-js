@@ -239,7 +239,7 @@ describe("Cucumber.Listener.SummaryFormatter", function () {
   });
 
   describe("handleAfterFeaturesEvent()", function () {
-    var callback;
+    var callback, event;
 
     beforeEach(function () {
       callback = createSpy("callback");
