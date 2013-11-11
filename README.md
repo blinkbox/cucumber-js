@@ -1,10 +1,14 @@
-# Cucumber.js [![Build Status](https://secure.travis-ci.org/cucumber/cucumber-js.png?branch=master)](http://travis-ci.org/cucumber/cucumber-js)
+# Cucumber.js
+  [![Build Status](https://secure.travis-ci.org/maciejblinkbox/cucumber-js.png?branch=cucumberTag_v0.3.1-alpha)](http://travis-ci.org/maciejblinkbox/cucumber-js)
+  [![Dependencies](https://david-dm.org/maciejblinkbox/cucumber-js.png)](https://david-dm.org/maciejblinkbox/cucumber-js) [![Code Climate](https://codeclimate.com/github/maciejblinkbox/cucumber-js.png)](https://codeclimate.com/github/maciejblinkbox/cucumber-js)
+
+[![NPM](https://nodei.co/npm/cucumber.png?stars&downloads)](https://nodei.co/npm/cucumber/)
+[![NPM](https://nodei.co/npm-dl/cucumber.png)](https://nodei.co/npm/cucumber/)
+
 
 *Cucumber*, the [popular Behaviour-Driven Development tool](http://cukes.info), brought to your JavaScript stack.
 
 It runs on both Node.js and *modern* web browsers.
-
-**Try it now: [http://cucumber.no.de](http://cucumber.no.de)!**
 
 ## Development status
 
@@ -24,10 +28,6 @@ Cucumber.js is still a work in progress. Here is its current status.
     <tr>
       <td><a href="https://github.com/cucumber/cucumber-tck/blob/master/background.feature">Background</a></td>
       <td>Done<sup>1</sup></td>
-    </tr>
-    <tr>
-      <td><a href="https://github.com/cucumber/cucumber-tck/blob/master/calling_steps_from_step_defs.feature">Calling steps from step defs</a></td>
-      <td>To do</td>
     </tr>
     <tr>
       <td><a href="https://github.com/cucumber/cucumber-tck/blob/master/comments.feature">Comments</a></td>
@@ -125,7 +125,7 @@ Cucumber.js is still a work in progress. Here is its current status.
       <td>Done</td>
     </tr>
     <tr>
-      <td><a href="https://github.com/cucumber/cucumber-js/blob/master/features/cli.featur">Command-line interface</a></td>
+      <td><a href="https://github.com/cucumber/cucumber-js/blob/master/features/cli.feature">Command-line interface</a></td>
       <td>Done</td>
     </tr>
   </tbody>
@@ -140,7 +140,7 @@ Cucumber.js is still a work in progress. Here is its current status.
 
 Cucumber.js is tested on:
 
-* Node.js 0.6 and 0.8 (see [CI builds](http://travis-ci.org/#!/cucumber/cucumber-js))
+* Node.js 0.6, 0.8 and 0.10.0 (see [CI builds](http://travis-ci.org/#!/cucumber/cucumber-js))
 * Google Chrome
 * Firefox
 * Safari
@@ -189,7 +189,7 @@ Feature: Example feature
   So that I can concentrate on building awesome applications
 
   Scenario: Reading documentation
-    Given I am on the Cucumber.js Github repository
+    Given I am on the Cucumber.js GitHub repository
     When I go to the README file
     Then I should see "Usage" as the page title
 ```
@@ -207,7 +207,7 @@ Support files let you setup the environment in which steps will be run, and defi
 
 var zombie = require('zombie');
 var World = function World(callback) {
-  this.browser = new zombie.Browser(); // this.browser will be available in step definitions
+  this.browser = new zombie(); // this.browser will be available in step definitions
 
   this.visit = function(url, callback) {
     this.browser.visit(url, callback);
@@ -225,7 +225,7 @@ It is possible to tell Cucumber to use another object instance than the construc
 
 var zombie = require('zombie');
 var WorldConstructor = function WorldConstructor(callback) {
-  this.browser = new zombie.Browser(); // this.browser will be available in step definitions
+  this.browser = new zombie(); // this.browser will be available in step definitions
 
   var world = {
     visit: function(url, callback) {
@@ -256,7 +256,7 @@ Step definitions are run when steps match their name. `this` is an instance of `
 var myStepDefinitionsWrapper = function () {
   this.World = require("../support/world.js").World; // overwrite default World constructor
 
-  this.Given(/^I am on the Cucumber.js Github repository$/, function(callback) {
+  this.Given(/^I am on the Cucumber.js GitHub repository$/, function(callback) {
     // Express the regexp above with the code you wish you had.
     // `this` is set to a new this.World instance.
     // i.e. you may use this.browser to execute the step:
@@ -277,11 +277,12 @@ var myStepDefinitionsWrapper = function () {
   this.Then(/^I should see "(.*)" as the page title$/, function(title, callback) {
     // matching groups are passed as parameters to the step definition
 
-    if (!this.isOnPageWithTitle(title))
-      // You can make steps fail by calling the `fail()` function on the callback:
-      callback.fail(new Error("Expected to be on page with title " + title));
-    else
+    var pageTitle = this.browser.text('title');
+    if (title === pageTitle) {
       callback();
+    } else {
+      callback.fail(new Error("Expected to be on page with title " + title));
+    }
   });
 };
 
@@ -295,15 +296,16 @@ this.Then('I should see "$title" as the page title', function(title, callback) {
   // the above string is converted to the following Regexp by Cucumber:
   // /^I should see "([^"]*)" as the page title$/
 
-  if (!this.isOnPageWithTitle(title))
-    // You can make steps fail by calling the `fail()` function on the callback:
-    callback.fail(new Error("Expected to be on page with title " + title));
-  else
+  var pageTitle = this.browser.text('title');
+  if (title === pageTitle) {
     callback();
+  } else {
+    callback.fail(new Error("Expected to be on page with title " + title));
+  }
 });
 ```
 
-`'I have $count "$string"'` would translate to `/^I have (.*) "([^"]*)")$/`.
+`'I have $count "$string"'` would translate to `/^I have (.*) "([^"]*)"$/`.
 
 #### Hooks
 
@@ -364,7 +366,7 @@ module.exports = myAfterHooks;
 
 ##### Around hooks
 
-It's also possible to combine both before and around hooks in one single definition with the help of *around hooks*:
+It's also possible to combine both before and after hooks in one single definition with the help of *around hooks*:
 
 ```javascript
 // features/support/advanced_hooks.js
@@ -453,7 +455,6 @@ A few example apps are available for you to browse:
 
 * [Rails app serving features in the browser](https://github.com/jbpros/cucumber-js-example)
 * [Express.js app running features in the cli](https://github.com/olivoil/NodeBDD)
-* [Try cucumber.js in the browser](http://cucumber.no.de/)
 
 ## Contribute
 

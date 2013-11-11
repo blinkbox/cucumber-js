@@ -8,7 +8,7 @@
     "gherkin",
     "tests"
   ],
-  "version": "0.3.0",
+  "version": "0.3.1",
   "homepage": "http://github.com/cucumber/cucumber-js",
   "author": "Julien Biezemans <jb@jbpros.com> (http://jbpros.net)",
   "contributors": [
@@ -23,7 +23,14 @@
     "Aslak Hellesøy <aslak.hellesoy@gmail.com>",
     "Aaron Garvey",
     "Omar Gonzalez <omar@almerblank.com>",
-    "Chris Young <chris@chrisyoung.org>"
+    "Chris Young <chris@chrisyoung.org>",
+    "Israel Halle <isra017@gmail.com>",
+    "Matteo Collina <matteo.collina@gmail.com>",
+    "Niklas Närhinen <niklas@narhinen.net>",
+    "Kim, Jang-hwan <janghwan@gmail.com>",
+    "Michael Zedeler <michael@zedeler.dk>",
+    "Tom V <tom@toc.com>",
+    "David Godfrey <reactiveraven@reactiveraven.co.uk>"
   ],
   "repository": {
     "type": "git",
@@ -38,21 +45,21 @@
   },
   "main": "./lib/cucumber",
   "engines": {
-    "node": "0.6 || 0.7 || 0.8"
+	  "node": "0.6 || 0.10 || 0.11"
   },
   "dependencies": {
-    "gherkin": "2.11.3",
-    "jasmine-node": "1.0.26",
+    "gherkin": "2.11.5",
+    "jasmine-node": "1.4.0",
     "connect": "2.3.2",
     "browserify": "1.15.5",
     "nopt": "1.0.10",
     "underscore": "1.3.3",
     "rimraf": "2.0.2",
     "mkdirp": "0.3.3",
-    "cucumber-html": "0.2.0",
+    "cucumber-html": "0.2.2",
     "walkdir": "0.0.4",
-    "coffee-script": "1.3.3",
-	"findit": "0.1.2"
+    "coffee-script": "1.4.0",
+    "pogo": "~0.3.2"
   },
   "scripts": {
     "test": "./bin/cucumber.js && jasmine-node spec"

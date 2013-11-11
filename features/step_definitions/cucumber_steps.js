@@ -4,81 +4,41 @@ var cucumberSteps = function() {
   this.World = World;
 
   Given(/^a scenario with:$/, function(steps, callback) {
-    this.featureSource += "Feature: A feature\n";
-    this.featureSource += "  Scenario: A scenario\n";
-    this.featureSource += steps.replace(/^/gm, '    ');
+    this.addScenario("A scenario", steps);
     callback();
   });
 
   Given(/^the step "([^"]*)" has a passing mapping$/, function(stepName, callback) {
-    this.stepDefinitions += "Given(/^" + stepName + "$/, function(callback) {\
-  world.touchStep(\"" + stepName + "\");\
-  callback();\
-});\n";
-    callback();
+    this.addPassingStepDefinitionWithName(stepName, callback);
   });
 
-  Given(/^a passing (before|after) hook$/, function(hookType, callback) {
-    var defineHook = (hookType == 'before' ? 'Before' : 'After');
-    this.stepDefinitions += defineHook + "(function(callback) {\
-  world.logCycleEvent('" + hookType + "');\
-  callback();\
-});\n";
-    callback();
-  });
-
-  Given(/^a passing around hook$/, function(callback) {
-    this.stepDefinitions += "Around(function(runScenario) {\
-  world.logCycleEvent('around-pre');\
-  runScenario(function(callback) {\
-    world.logCycleEvent('around-post');\
-    callback();\
-  });\
-});\n";
-    callback();
+  Given(/^a passing (before|after|around) hook$/, function(hookType, callback) {
+    if (hookType == "before")
+      this.addBeforeHook(callback);
+    else if (hookType == "after")
+      this.addAfterHook(callback);
+    else
+      this.addAroundHook(callback);
   });
 
   Given(/^an untagged hook$/, function(callback) {
-    this.stepDefinitions += "Before(function(callback) {\
-  world.logCycleEvent('hook');\
-  callback();\
-});\n";
-    callback();
+    this.addUntaggedHook(callback);
   });
 
-  Given(/^a hook tagged with "([^"]*)"$/, function(tag, callback) {
-    this.stepDefinitions += "Before('" + tag +"', function(callback) {\
-  world.logCycleEvent('hook');\
-  callback();\
-});\n";
-    callback();
+  Given(/^a hook tagged with "([^"]*)"$/, function(tags, callback) {
+    this.addHookWithTags(tags, callback);
   });
 
-  Given(/^an around hook tagged with "([^"]*)"$/, function(tag, callback) {
-    this.stepDefinitions += "Around('" + tag + "', function(runScenario) {\
-  world.logCycleEvent('hook-pre');\
-  runScenario(function(callback) {\
-    world.logCycleEvent('hook-post');\
-    callback();\
-  });\
-});\n";
-    callback();
+  Given(/^an around hook tagged with "([^"]*)"$/, function(tags, callback) {
+    this.addAroundHookWithTags(tags, callback);
   });
 
   Given(/^the step "([^"]*)" has a failing mapping$/, function(stepName, callback) {
-    this.stepDefinitions += "Given(/^" + stepName + "$/, function(callback) {\
-  world.touchStep(\"" + stepName + "\");\
-  throw(new Error('I was supposed to fail.'));\
-});\n";
-    callback();
+    this.addFailingMapping(stepName, {}, callback);
   });
 
   Given(/^the step "([^"]*)" has a mapping failing with the message "([^"]*)"$/, function(stepName, message, callback) {
-    this.stepDefinitions += "Given(/^" + stepName + "$/, function(callback) {\
-  world.touchStep(\"" + stepName + "\");\
-  throw(new Error('" + message + "'));\
-});\n";
-    callback();
+    this.addFailingMapping(stepName, { message: message }, callback);
   });
 
   Given(/^the step "([^"]*)" has a mapping asynchronously failing with the message "([^"]*)"$/, function(stepName, message, callback) {
@@ -235,6 +195,14 @@ setTimeout(callback.pending, 10);\
   When(/^the data table is passed to a step mapping that converts it to key\/value pairs$/, function(callback) {
     this.stepDefinitions += "When(/^a step with data table:$/, function(dataTable, callback) {\
 world.dataTableLog = dataTable.hashes();\
+callback();\
+});\n";
+    this.runFeature({}, callback);
+  });
+
+  When(/^the data table is passed to a step mapping that gets the row arrays without the header$/, function(callback) {
+    this.stepDefinitions += "When(/^a step with data table:$/, function(dataTable, callback) {\
+world.dataTableLog = dataTable.rows();\
 callback();\
 });\n";
     this.runFeature({}, callback);
