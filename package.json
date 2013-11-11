@@ -45,8 +45,7 @@
   },
   "main": "./lib/cucumber",
   "engines": {
-	// removing 0.8 as it was resulting in segmentation fault on travis
-    "node": "0.6 || 0.10 || 0.11"
+	  "node": "0.6 || 0.10 || 0.11"
   },
   "dependencies": {
     "gherkin": "2.11.5",
