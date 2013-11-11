@@ -2,9 +2,47 @@
 
 ## [v0.3.x](https://github.com/cucumber/cucumber-js/compare/v0.3.0...master)
 
-### [master (unreleased)](https://github.com/cucumber/cucumber-js/compare/v0.3.0...master)
+### [master (unreleased)](https://github.com/cucumber/cucumber-js/compare/v0.3.1...master)
 
 **TBD**
+
+
+
+### [v0.3.1](https://github.com/cucumber/cucumber-js/compare/v0.3.0...v0.3.1)
+
+#### New features
+
+* Add DataTable.rows() (Niklas Närhinen)
+* Officially support Node 0.10 and 0.11 (Julien Biezemans)
+
+#### Changed features
+
+* Update cucumber-html (Aslak Hellesøy)
+* Bump Gherkin (Julien Biezemans)
+* Add options parameter to JSON formatter (Israël Hallé)
+* Updated CoffeeScript (Matteo Collina)
+* Specify strict coffee-script version number (Julien Biezemans)
+* Bump jasmine-node (Julien Biezemans)
+
+#### Fixes
+
+* Fix travis build Node versions (Julien Biezemans)
+* Fix Travis CI configuration (Julien Biezemans)
+
+#### Documentation, internals and tests
+
+* Remove words in History (Julien Biezemans)
+* Update dev status table in README (Julien Biezemans)
+* Update LICENSE (Julien Biezemans)
+* Add contributors (Julien Biezemans)
+* Move data table scenario to TCK (Julien Biezemans)
+* Be consistent in spec matchers (Julien Biezemans)
+* Remove cucumber.no.de links	(Kim, Jang-hwan)
+* Fix broken link in README dev status table (#118) (Michael Zedeler)
+* Refactor hook-related Given steps in JS stepdefs (Julien Biezemans)
+* Refactor failing mapping JS step definitions (Julien Biezemans & Matt Wynne)
+* Update README.md to correct error in example for zombie initialization (Tom V)
+* Update minor typos in README.md (David Godfrey)
 
 
 
@@ -13,18 +51,18 @@
 #### New features
 
 * Allow for node-like callback errors (Julien Biezemans)
-* Accept multiple features in volatile configuration (close #52) (Julien Biezemans)
+* Accept multiple features in volatile configuration (#52) (Julien Biezemans)
 
 #### Fixes
 
 * Add ^ prefix and $ suffix to string-based step definition regexps (#77) (Julien Biezemans)
-* Allow for unsafe regexp characters in stepdef string patterns (close #77) (Julien Biezemans)
+* Allow for unsafe regexp characters in stepdef string patterns (#77) (Julien Biezemans)
 
 #### Documentation, internals and tests
 
 * Build on Node.js 0.8 on Travis (Julien Biezemans)
 * Rewrite README's status table in HTML (Julien Biezemans)
-* Bump Gherkin (close #78) (Julien Biezemans)
+* Bump Gherkin (#78) (Julien Biezemans)
 * Switch to HTML tables in README (Julien Biezemans)
 * Bump Aruba (Julien Biezemans)
 
@@ -40,7 +78,7 @@
 
 #### Fixes
 
-* Exclude unmatched features from AST (close #80) (Julien Biezemans)
+* Exclude unmatched features from AST (#80) (Julien Biezemans)
 
 
 
@@ -158,7 +196,7 @@
 
 #### New features
 
-* Add support for string-based step definition patterns (closes #48) (Ted de Koning, Julien Biezemans)
+* Add support for string-based step definition patterns (#48) (Ted de Koning, Julien Biezemans)
 
 #### Documentation, internals and tests
 
